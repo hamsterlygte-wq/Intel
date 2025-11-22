@@ -1,0 +1,32 @@
+### GET request to example server
+GET http://localhost:8080
+###
+GET http://localhost:8080/ap1/v1/software-engineers
+###
+GET http://localhost:8080/ap1/v1/software-engineers/1
+###
+GET http://localhost:8080/ap1/v1/software-engineers/2
+###
+GET http://localhost:8080/ap1/v1/software-engineers/3
+###
+
+
+
+
+POST http://localhost:8080/ap1/v1/software-engineers
+Content-Type: application/json
+
+{
+  "name": "will",
+  "techStack": "content, spring boot, spring"
+}
+###
+DELETE http://localhost:8080/ap1/v1/software-engineers/3
+###
+PUT http://localhost:8080/ap1/v1/software-engineers/3
+Content-Type: application/json
+
+{
+    "name": "dudddddeeee Doe",
+    "techStack": "Java, Spring Boot, PostgreSQL"
+}

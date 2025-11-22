@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>requests.http</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #c77dbb; font-style: italic;}
+.s4 { color: #bcbec4;}
+.s5 { color: #bcbec4;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+requests.http</font>
+</center></td></tr></table>
+<pre><span class="s0">### GET request to example server</span>
+<span class="s2">GET </span><span class="s1">http://localhost:8080</span>
+<span class="s0">###</span>
+<span class="s2">GET </span><span class="s1">http://localhost:8080/ap1/v1/software-engineers</span>
+<span class="s0">###</span>
+<span class="s2">GET </span><span class="s1">http://localhost:8080/ap1/v1/software-engineers/1</span>
+<span class="s0">###</span>
+<span class="s2">GET </span><span class="s1">http://localhost:8080/ap1/v1/software-engineers/2</span>
+<span class="s0">###</span>
+<span class="s2">GET </span><span class="s1">http://localhost:8080/ap1/v1/software-engineers/3</span>
+<span class="s0">###</span>
+
+
+
+
+<span class="s2">POST </span><span class="s1">http://localhost:8080/ap1/v1/software-engineers</span>
+<span class="s3">Content-Type</span><span class="s1">: </span><span class="s4">application/json</span>
+
+<span class="s5">{ 
+  &quot;name&quot;: &quot;willfggf&quot;, 
+  &quot;techStack&quot;: &quot;content, spring boot, spring&quot; 
+}</span>
+<span class="s0">###</span>
+<span class="s2">DELETE </span><span class="s1">http://localhost:8080/ap1/v1/software-engineers/3</span>
+<span class="s0">###</span>
+<span class="s2">PUT </span><span class="s1">http://localhost:8080/ap1/v1/software-engineers/3</span>
+<span class="s3">Content-Type</span><span class="s1">: </span><span class="s4">application/json</span>
+
+<span class="s5">{ 
+    &quot;name&quot;: &quot;dudddddeeee Doe&quot;, 
+    &quot;techStack&quot;: &quot;Java, Spring Boot, PostgreSQL&quot; 
+}</span>
+</pre>
+</body>
+</html>

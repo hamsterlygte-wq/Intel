@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>SoftwareEngineerService.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+SoftwareEngineerService.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">amigoscode</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">jakarta</span><span class="s2">.</span><span class="s1">transaction</span><span class="s2">.</span><span class="s1">Transactional</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">stereotype</span><span class="s2">.</span><span class="s1">Service</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+
+
+
+<span class="s1">@Service</span>
+<span class="s0">public class </span><span class="s1">SoftwareEngineerService </span><span class="s2">{</span>
+    <span class="s0">private final </span><span class="s1">SoftwareEngineerRepository softwareEngineerRepository</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">AiService aiService</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">SoftwareEngineerService</span><span class="s2">(</span><span class="s1">SoftwareEngineerRepository softwareEngineerRepository</span><span class="s2">, </span><span class="s1">AiService aiService</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">softwareEngineerRepository </span><span class="s2">= </span><span class="s1">softwareEngineerRepository</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">aiService </span><span class="s2">= </span><span class="s1">aiService</span><span class="s2">;</span>
+
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">SoftwareEngineer</span><span class="s2">&gt; </span><span class="s1">getSoftWareEngineers</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">softwareEngineerRepository</span><span class="s2">.</span><span class="s1">findAll</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">insertSoftwareEngineer</span><span class="s2">(</span><span class="s1">SoftwareEngineer softwareEngineer</span><span class="s2">) {</span>
+        <span class="s1">String prompt </span><span class="s2">= </span><span class="s3">&quot;&quot;&quot; 
+                Based on the programming tech stack %S that %s has given provide the full learning path for this person 
+                &quot;&quot;&quot;</span><span class="s2">.</span><span class="s1">formatted</span><span class="s2">(</span><span class="s1">softwareEngineer</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">(), </span><span class="s1">softwareEngineer</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">());</span>
+        <span class="s1">String chatres </span><span class="s2">= </span><span class="s1">aiService</span><span class="s2">.</span><span class="s1">chat</span><span class="s2">(</span><span class="s1">prompt</span><span class="s2">);</span>
+
+        <span class="s1">softwareEngineer</span><span class="s2">.</span><span class="s1">setRecommendation</span><span class="s2">(</span><span class="s1">chatres</span><span class="s2">);</span>
+
+
+        <span class="s1">softwareEngineerRepository</span><span class="s2">.</span><span class="s1">save</span><span class="s2">(</span><span class="s1">softwareEngineer</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">SoftwareEngineer getSoftWareEngineerById</span><span class="s2">(</span><span class="s1">Integer id</span><span class="s2">) {</span>
+        <span class="s0">return </span><span class="s1">softwareEngineerRepository</span><span class="s2">.</span><span class="s1">findById</span><span class="s2">(</span><span class="s1">id</span><span class="s2">).</span><span class="s1">orElseThrow</span><span class="s2">(() </span><span class="s1">-&gt; </span><span class="s0">new </span><span class="s1">IllegalStateException</span><span class="s2">(</span><span class="s1">id </span><span class="s2">+ </span><span class="s3">&quot;not found&quot;</span><span class="s2">));</span>
+    <span class="s2">}</span>
+    <span class="s0">public void </span><span class="s1">deleteSoftwareEngineer</span><span class="s2">(</span><span class="s1">Integer id</span><span class="s2">) {</span>
+        <span class="s0">boolean </span><span class="s1">exist </span><span class="s2">= </span><span class="s1">softwareEngineerRepository</span><span class="s2">.</span><span class="s1">existsById</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(!</span><span class="s1">exist</span><span class="s2">) {</span>
+            <span class="s0">throw new </span><span class="s1">IllegalStateException</span><span class="s2">(</span><span class="s1">id </span><span class="s2">+ </span><span class="s3">&quot;not found&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+        <span class="s1">softwareEngineerRepository</span><span class="s2">.</span><span class="s1">deleteById</span><span class="s2">(</span><span class="s1">id</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">putSoftwareEngineer</span><span class="s2">(</span><span class="s1">Integer id</span><span class="s2">, </span><span class="s1">SoftwareEngineer update</span><span class="s2">) {</span>
+
+        <span class="s1">SoftwareEngineer softwareEngineer </span><span class="s2">= </span><span class="s1">softwareEngineerRepository</span><span class="s2">.</span><span class="s1">findById</span><span class="s2">(</span><span class="s1">id</span><span class="s2">).</span><span class="s1">orElseThrow</span><span class="s2">(() </span><span class="s1">-&gt; </span><span class="s0">new </span><span class="s1">IllegalStateException</span><span class="s2">(</span><span class="s1">id </span><span class="s2">+ </span><span class="s3">&quot;not found&quot;</span><span class="s2">));</span>
+        <span class="s1">softwareEngineer</span><span class="s2">.</span><span class="s1">setName</span><span class="s2">(</span><span class="s1">update</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">());</span>
+        <span class="s1">softwareEngineer</span><span class="s2">.</span><span class="s1">setTechStack</span><span class="s2">(</span><span class="s1">update</span><span class="s2">.</span><span class="s1">getTechStack</span><span class="s2">());</span>
+        <span class="s1">softwareEngineerRepository</span><span class="s2">.</span><span class="s1">save</span><span class="s2">(</span><span class="s1">softwareEngineer</span><span class="s2">);</span>
+
+
+    <span class="s2">}</span>
+
+
+<span class="s2">}</span>
+
+
+</pre>
+</body>
+</html>
